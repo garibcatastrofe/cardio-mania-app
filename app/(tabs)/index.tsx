@@ -1,15 +1,22 @@
 import { Text, View, Pressable, Button } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import Colors from "@/constants/Colors";
 import { useColorScheme } from "@/components/useColorScheme";
 import CircularTimer from "@/components/CircularTimer";
 import { useState, useEffect, useRef } from "react";
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
+import Ionicons from "@expo/vector-icons/Ionicons";
+
+/* COMPONENTS */
+import { Modal } from "../../components/Modal";
+
+/* STORES */
+import { useModal } from "../../stores/Modal/modalStore";
 
 export default function TabOneScreen() {
   const colorScheme = useColorScheme();
+  const { isActivated, setModal, modalBody, modalTitle } = useModal();
 
   const times = [5, 10, 8, 15]; // segundos
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
@@ -97,14 +104,29 @@ export default function TabOneScreen() {
 
   return (
     <SafeAreaView
-      className={`justify-center flex-1 px-6 ${getColor({ isBackground: true })}`}
+      className={`justify-center flex-1 px-6 ${getColor({
+        isBackground: true,
+      })}`}
     >
+      <Modal />
+      {/* BOTON PARA ABRIR MODAL */}
+      <Pressable
+        className="absolute self-center p-4 bg-white rounded-2xl bottom-4 left-4"
+        onPress={() =>
+          setModal(
+            true,
+            "Opciones",
+            <View className="p-4 bg-red-500">
+              <Text>Este es el body del modal</Text>
+            </View>
+          )
+        }
+      >
+        <Ionicons name="options" size={35} color="black" />
+      </Pressable>
       <View>
         {/* TITULO */}
-        <Text
-          style={{ color: Colors[colorScheme ?? "light"].tint }}
-          className="text-5xl text-center font-poppins_light"
-        >
+        <Text className="text-5xl text-center text-white font-poppins_light">
           CARDIOMANIA
         </Text>
 
@@ -122,13 +144,21 @@ export default function TabOneScreen() {
         {/* BOTONES PARA INICIAR, REINICIAR Y PAUSAR */}
         <View className="flex flex-row justify-center gap-4">
           <Pressable
-            className={`self-center p-4 bg-white rounded-2xl ${currentIndex !== null ? "pointer-events-none opacity-20" : "opacity-100"}`}
+            className={`self-center p-4 bg-white rounded-2xl ${
+              currentIndex !== null
+                ? "pointer-events-none opacity-20"
+                : "opacity-100"
+            }`}
             onPress={startTimer}
           >
             <FontAwesome5 name="running" size={35} color="black" />
           </Pressable>
           <Pressable
-            className={`self-center p-4 bg-white rounded-2xl ${currentIndex === null ? "pointer-events-none opacity-20" : "opacity-100"}`}
+            className={`self-center p-4 bg-white rounded-2xl ${
+              currentIndex === null
+                ? "pointer-events-none opacity-20"
+                : "opacity-100"
+            }`}
             onPress={() => setPaused((prev) => !prev)}
           >
             <Entypo
@@ -145,7 +175,11 @@ export default function TabOneScreen() {
             />
           </Pressable>
           <Pressable
-            className={`self-center p-4 bg-white rounded-2xl ${currentIndex === null ? "pointer-events-none opacity-20" : "opacity-100"}`}
+            className={`self-center p-4 bg-white rounded-2xl ${
+              currentIndex === null
+                ? "pointer-events-none opacity-20"
+                : "opacity-100"
+            }`}
             onPress={reset}
           >
             <AntDesign name="reload1" size={35} color="black" />
