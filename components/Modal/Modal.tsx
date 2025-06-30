@@ -1,5 +1,5 @@
 import { View, Text, Pressable, ScrollView } from "react-native";
-import { useModal } from "../stores/Modal/modalStore";
+import { useModal } from "../../stores/Modal/modalStore";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 export function Modal() {

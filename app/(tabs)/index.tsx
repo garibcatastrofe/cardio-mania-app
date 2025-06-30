@@ -9,7 +9,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 /* COMPONENTS */
-import { Modal } from "../../components/Modal";
+import { Modal } from "../../components/Modal/Modal";
 
 /* STORES */
 import { useModal } from "../../stores/Modal/modalStore";
