@@ -70,22 +70,18 @@ export function Modal() {
         pointerEvents={isActivated ? "auto" : "none"}
       >
         <View className="flex-row items-center justify-between">
-          <Text className="text-2xl font-poppins">{modalTitle}</Text>
+          <Text className="text-2xl font-poppins text-neutral-600">
+            {modalTitle}
+          </Text>
           <Pressable
             className="p-2 rounded-lg active:bg-neutral-100"
             hitSlop={20}
             onPress={hacerModalFalso}
           >
-            {({ pressed }) => (
-              <Feather
-                name="x"
-                size={25}
-                color={pressed ? "#039357" : "black"}
-              />
-            )}
+            <Feather name="x" size={25} color={"#525252"} />
           </Pressable>
         </View>
-        <View style={{ maxHeight: 300 }}>{modalBody}</View>
+        <View style={{ maxHeight: 500 }}>{modalBody}</View>
       </Animated.View>
     </SafeAreaView>
   );

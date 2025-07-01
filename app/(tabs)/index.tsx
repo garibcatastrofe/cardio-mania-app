@@ -10,6 +10,7 @@ import CircularTimer from "@/components/CircularTimer";
 
 /* STORES */
 import { useModal } from "../../stores/Modal/modalStore";
+import { useRoundsArray } from "@/stores/Rounds/roundStore";
 
 /* ICONS */
 import Entypo from "@expo/vector-icons/Entypo";
@@ -19,22 +20,23 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function TabOneScreen() {
   const { setModal } = useModal();
+  const { roundsArray, setRoundsArray } = useRoundsArray();
 
-  const times = [
+  /* const times = [
     10, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20,
-  ]; // segundos
+  ]; */
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-  const [currentSeconds, setCurrentSeconds] = useState(times[0]);
+  const [currentSeconds, setCurrentSeconds] = useState(/* roundsArray[0] */ 0);
   const [paused, setPaused] = useState(false);
   const referenciaTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
   const startTimer = () => {
-    if (times.length === 0) {
+    if (roundsArray.length === 0) {
       return;
     }
     clearInterval(referenciaTimer.current!);
     setPaused(false);
-    setCurrentSeconds(times[0]);
+    setCurrentSeconds(roundsArray[0]);
 
     // ⚠️ Importante: reiniciamos el index después del render
     requestAnimationFrame(() => {
@@ -45,9 +47,13 @@ export default function TabOneScreen() {
   const reset = () => {
     clearInterval(referenciaTimer.current!);
     setCurrentIndex(null);
-    setCurrentSeconds(times[0]);
+    setCurrentSeconds(roundsArray[0]);
     setPaused(false);
   };
+
+  useEffect(() => {
+    setCurrentSeconds(roundsArray[0]);
+  }, []);
 
   // ⏱ Controlar el temporizador con setInterval
   useEffect(() => {
@@ -63,14 +69,14 @@ export default function TabOneScreen() {
           clearInterval(referenciaTimer.current!);
           const nextIndex = currentIndex + 1;
 
-          if (nextIndex < times.length) {
+          if (nextIndex < roundsArray.length) {
             setCurrentIndex(nextIndex);
-            return times[nextIndex];
+            return roundsArray[nextIndex];
           } else {
             // Reset to preview
             setCurrentIndex(null);
             setPaused(false);
-            return times[0];
+            return roundsArray[0];
           }
         }
         return prev - 1;
@@ -82,25 +88,16 @@ export default function TabOneScreen() {
 
   const getColor = ({ isBackground }: { isBackground: boolean }): string => {
     if (currentIndex === null) {
-      if (isBackground) {
-        return "bg-[#22c55e]";
-      } else {
-        return "#86efac";
-      }
+      if (isBackground) return "bg-[#4ade80]";
+      return "#86efac";
     }
 
     if (currentIndex % 2 === 0) {
-      if (isBackground) {
-        return "bg-[#22c55e]";
-      } else {
-        return "#86efac";
-      }
+      if (isBackground) return "bg-[#4ade80]";
+      return "#86efac";
     } else {
-      if (isBackground) {
-        return "bg-[#eab308]";
-      } else {
-        return "#fde047";
-      }
+      if (isBackground) return "bg-[#facc15]";
+      return "#fde047";
     }
   };
 
@@ -133,7 +130,7 @@ export default function TabOneScreen() {
           <CircularTimer
             currentSeconds={currentSeconds}
             totalSeconds={
-              currentIndex !== null ? times[currentIndex] : times[0]
+              currentIndex !== null ? roundsArray[currentIndex] : roundsArray[0]
             }
             color={"#ffffff"}
             paused={paused}

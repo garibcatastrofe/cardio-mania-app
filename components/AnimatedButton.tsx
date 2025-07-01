@@ -11,7 +11,7 @@ export function AnimatedButton({
   pressOutFunction: Function;
   backgroundColor: string;
   icon: React.ReactNode;
-  icon1?: React.ReactNode,
+  icon1?: React.ReactNode;
   componentClassName: string;
 }) {
   //const { setModal } = useModal();
