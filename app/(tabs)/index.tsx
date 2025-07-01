@@ -11,7 +11,7 @@ import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 export default function TabOneScreen() {
   const colorScheme = useColorScheme();
 
-  const times = [5, 10, 8, 15]; // segundos
+  const times = [10, 30, 20, 30, 20, 30, 20]; // segundos
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [currentSeconds, setCurrentSeconds] = useState(times[0]);
   const [paused, setPaused] = useState(false);
