@@ -4,12 +4,12 @@
     "slug": "cardio-mania-app",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/cardio-mania-logo-png.png",
+    "icon": "./assets/images/icono.png",
     "scheme": "cardiomaniaapp",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
     "splash": {
-      "image": "./assets/images/cardio-mania-logo-png.png",
+      "image": "./assets/images/icono.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -18,7 +18,7 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/cardio-mania-logo-png.png",
+        "foregroundImage": "./assets/images/icono.png",
         "backgroundColor": "#ffffff"
       },
       "edgeToEdgeEnabled": true,
@@ -27,7 +27,7 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/cardio-mania-logo-png.png"
+      "favicon": "./assets/images/icono.png"
     },
     "plugins": [
       "expo-router"

@@ -1,24 +1,28 @@
-import { Text, View, Pressable, Button } from "react-native";
+import { Text, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useColorScheme } from "@/components/useColorScheme";
-import CircularTimer from "@/components/CircularTimer";
 import { useState, useEffect, useRef } from "react";
+
+/* COMPONENTS */
+import { Modal } from "../../components/Modal/Modal";
+import { Rounds } from "@/components/Modal/Body/Rounds";
+import { AnimatedButton } from "@/components/AnimatedButton";
+import CircularTimer from "@/components/CircularTimer";
+
+/* STORES */
+import { useModal } from "../../stores/Modal/modalStore";
+
+/* ICONS */
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-/* COMPONENTS */
-import { Modal } from "../../components/Modal/Modal";
-
-/* STORES */
-import { useModal } from "../../stores/Modal/modalStore";
-
 export default function TabOneScreen() {
-  const colorScheme = useColorScheme();
-  const { isActivated, setModal, modalBody, modalTitle } = useModal();
+  const { setModal } = useModal();
 
-  const times = [10, 30, 20, 30, 20, 30, 20]; // segundos
+  const times = [
+    10, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20,
+  ]; // segundos
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
   const [currentSeconds, setCurrentSeconds] = useState(times[0]);
   const [paused, setPaused] = useState(false);
@@ -100,92 +104,98 @@ export default function TabOneScreen() {
     }
   };
 
-  //const showPreview = currentIndex === null && times.length > 0;
-
   return (
-    <SafeAreaView
-      className={`justify-center flex-1 px-6 ${getColor({
-        isBackground: true,
-      })}`}
-    >
+    <>
+      {/* MODAL PARA LOS CICLOS */}
       <Modal />
-      {/* BOTON PARA ABRIR MODAL */}
-      <Pressable
-        className="absolute self-center p-4 bg-white rounded-2xl bottom-4 left-4"
-        onPress={() =>
-          setModal(
-            true,
-            "Opciones",
-            <View className="p-4 bg-red-500">
-              <Text>Este es el body del modal</Text>
-            </View>
-          )
-        }
-      >
-        <Ionicons name="options" size={35} color="black" />
-      </Pressable>
-      <View>
-        {/* TITULO */}
-        <Text className="text-5xl text-center text-white font-poppins_light">
-          CARDIOMANIA
-        </Text>
 
-        {/* TEMPORIZADOR */}
-        <CircularTimer
-          currentSeconds={currentSeconds}
-          totalSeconds={currentIndex !== null ? times[currentIndex] : times[0]}
-          color={"#ffffff"}
-          paused={paused}
-          active={currentIndex !== null}
-          keyFrame={currentIndex ?? -1}
-          colorStroke={getColor({ isBackground: false })}
+      {/* CONTENEDOR GENERAL */}
+      <SafeAreaView
+        className={`justify-center flex-1 ${getColor({
+          isBackground: true,
+        })}`}
+      >
+        {/* BOTON PARA ABRIR MODAL DE ROUNDS */}
+        <AnimatedButton
+          pressOutFunction={() => setModal(true, "Generar ciclo", <Rounds />)}
+          backgroundColor="bg-[#ffffff]"
+          icon={<Ionicons name="options" size={35} color="#525252" />}
+          componentClassName="absolute z-30 self-start bottom-6 right-6"
         />
 
-        {/* BOTONES PARA INICIAR, REINICIAR Y PAUSAR */}
-        <View className="flex flex-row justify-center gap-4">
-          <Pressable
-            className={`self-center p-4 bg-white rounded-2xl ${
-              currentIndex !== null
-                ? "pointer-events-none opacity-20"
-                : "opacity-100"
-            }`}
-            onPress={startTimer}
-          >
-            <FontAwesome5 name="running" size={35} color="black" />
-          </Pressable>
-          <Pressable
-            className={`self-center p-4 bg-white rounded-2xl ${
-              currentIndex === null
-                ? "pointer-events-none opacity-20"
-                : "opacity-100"
-            }`}
-            onPress={() => setPaused((prev) => !prev)}
-          >
-            <Entypo
-              className={paused ? "" : "hidden"}
-              name="controller-play"
-              size={35}
-              color="black"
+        <View>
+          {/* TITULO */}
+          <Text className="text-5xl text-center text-white font-poppins_light">
+            CARDIOMANIA
+          </Text>
+
+          {/* TEMPORIZADOR */}
+          <CircularTimer
+            currentSeconds={currentSeconds}
+            totalSeconds={
+              currentIndex !== null ? times[currentIndex] : times[0]
+            }
+            color={"#ffffff"}
+            paused={paused}
+            active={currentIndex !== null}
+            keyFrame={currentIndex ?? -1}
+            colorStroke={getColor({ isBackground: false })}
+          />
+
+          <View className="flex flex-row justify-center gap-4">
+            {/* BOTÓN PARA INICIAR */}
+            <AnimatedButton
+              pressOutFunction={startTimer}
+              backgroundColor="bg-[#ffffff]"
+              icon={<FontAwesome5 name="running" size={35} color="#525252" />}
+              componentClassName={`self-center ${
+                currentIndex !== null
+                  ? "pointer-events-none opacity-20"
+                  : "opacity-100"
+              }`}
             />
-            <AntDesign
-              className={paused ? "hidden" : ""}
-              name="pause"
-              size={35}
-              color="black"
+
+            {/* BOTÓN PARA PAUSAR */}
+            <AnimatedButton
+              pressOutFunction={() => setPaused((prev) => !prev)}
+              backgroundColor="bg-[#ffffff]"
+              icon={
+                <Entypo
+                  className={paused ? "" : "hidden"}
+                  name="controller-play"
+                  size={35}
+                  color="#525252"
+                />
+              }
+              icon1={
+                <AntDesign
+                  className={paused ? "hidden" : ""}
+                  name="pause"
+                  size={35}
+                  color="#525252"
+                />
+              }
+              componentClassName={`self-center ${
+                currentIndex === null
+                  ? "pointer-events-none opacity-20"
+                  : "opacity-100"
+              }`}
             />
-          </Pressable>
-          <Pressable
-            className={`self-center p-4 bg-white rounded-2xl ${
-              currentIndex === null
-                ? "pointer-events-none opacity-20"
-                : "opacity-100"
-            }`}
-            onPress={reset}
-          >
-            <AntDesign name="reload1" size={35} color="black" />
-          </Pressable>
+
+            {/* BOTÓN PARA REINICIAR */}
+            <AnimatedButton
+              pressOutFunction={reset}
+              backgroundColor="bg-[#ffffff]"
+              icon={<AntDesign name="reload1" size={35} color="#525252" />}
+              componentClassName={`self-center ${
+                currentIndex === null
+                  ? "pointer-events-none opacity-20"
+                  : "opacity-100"
+              }`}
+            />
+          </View>
         </View>
-      </View>
-    </SafeAreaView>
+      </SafeAreaView>
+    </>
   );
 }
