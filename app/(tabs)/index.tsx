@@ -4,9 +4,8 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import { useFocusEffect } from "@react-navigation/native";
 
 /* COMPONENTS */
-import { Modal } from "../../components/Modal/Modal";
-import { Rounds } from "@/components/Modal/Body/Rounds";
-import { AnimatedButton } from "@/components/AnimatedButton";
+import { AnimatedModal } from "../../components/Animated/AnimatedModal";
+import { AnimatedButton } from "@/components/Animated/AnimatedButton";
 import CircularTimer from "@/components/CircularTimer";
 
 /* STORES */
@@ -51,7 +50,6 @@ export default function TabOneScreen() {
 
   useEffect(() => {
     setCurrentSeconds(roundsArray[0].seconds);
-    setModal(false, "Generar ciclo", <Rounds />);
   }, []);
 
   // ⏱ Controlar el temporizador con setInterval
@@ -103,17 +101,13 @@ export default function TabOneScreen() {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle("light-content");
-      /* return () => {
-          // (opcional) restaurar estilo anterior si quieres
-          
-        }; */
     }, [])
   );
 
   return (
     <>
       {/* MODAL PARA LOS CICLOS */}
-      <Modal />
+      <AnimatedModal />
 
       {/* CONTENEDOR GENERAL */}
       <SafeAreaView

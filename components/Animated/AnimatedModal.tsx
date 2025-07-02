@@ -14,7 +14,7 @@ import { useModal } from "@/stores/Modal/modalStore";
 /* ICONS */
 import Feather from "@expo/vector-icons/Feather";
 
-export function Modal() {
+export function AnimatedModal() {
   const { isActivated, setModal, modalTitle, modalBody } = useModal();
 
   const hacerModalFalso = () => {

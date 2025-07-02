@@ -5,9 +5,9 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 
 /* COMPONENTS */
-import { AnimatedButton } from "@/components/AnimatedButton";
+import { AnimatedButton } from "@/components/Animated/AnimatedButton";
 
-export function RoundIncreaseDecrease({
+export function SpecificRound({
   round,
   seconds,
   lastOne,
@@ -22,7 +22,7 @@ export function RoundIncreaseDecrease({
         <View className="flex flex-row items-center justify-between">
           <Text className="text-lg text-white font-poppins">Ronda {round}</Text>
           <Pressable
-            className="flex items-center justify-center p-2 rounded-full bg-neutral-100"
+            className="flex items-center justify-center p-2 bg-red-100 rounded-full"
             onPress={() => console.log("Delete round button pressed!")}
           >
             <Feather name="x" size={15} color={"#ef4444"} />
@@ -30,14 +30,14 @@ export function RoundIncreaseDecrease({
         </View>
         <View className="flex flex-row items-center justify-between w-full h-fit">
           <AnimatedButton
-            backgroundColor="bg-neutral-100"
+            backgroundColor="bg-white"
             componentClassName="self-center"
             icon={<AntDesign name="minus" size={24} color="#52525b" />}
             pressOutFunction={() => console.log("Minus pressed!")}
           />
           <Text className="text-lg text-white font-poppins">{seconds}</Text>
           <AnimatedButton
-            backgroundColor="bg-neutral-100"
+            backgroundColor="bg-white"
             componentClassName="self-center"
             icon={<AntDesign name="plus" size={24} color="#52525b" />}
             pressOutFunction={() => console.log("Plus pressed!")}

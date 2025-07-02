@@ -1,32 +1,13 @@
 import { create } from "zustand";
 
+/* INTERFACES */
+import { Round } from "@/interfaces/round";
+
 // Tipado del estado global
 interface RoundArray {
   roundsArray: Round[];
   setRoundsArray: (roundsArray: Round[]) => void;
 }
-
-interface Round {
-  seconds: number;
-  highColor: NativewindColor;
-  lowColor: NativewindColor;
-}
-
-type NativewindColor =
-  | "bg-red-400"
-  | "bg-orange-400"
-  | "bg-yellow-400"
-  | "bg-green-400"
-  | "bg-cyan-400"
-  | "bg-blue-400"
-  | "bg-purple-400"
-  | "bg-red-300"
-  | "bg-orange-300"
-  | "bg-yellow-300"
-  | "bg-green-300"
-  | "bg-cyan-300"
-  | "bg-blue-300"
-  | "bg-purple-300";
 
 // Crear el store
 export const useRoundsArray = create<RoundArray>((set) => ({

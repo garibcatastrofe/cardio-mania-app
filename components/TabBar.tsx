@@ -1,14 +1,17 @@
 import { View } from "react-native";
 import { useLinkBuilder } from "@react-navigation/native";
-import { Text, PlatformPressable } from "@react-navigation/elements";
+import { PlatformPressable } from "@react-navigation/elements";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
-import SimpleLineIcons from "@expo/vector-icons/SimpleLineIcons";
 
 /* ICONS */
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 
+/* STORES */
+import { useTabBarStore } from "@/stores/TabBarHeight/tabBarHeightStore";
+
 export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
   const { buildHref } = useLinkBuilder();
+  const { setHeight } = useTabBarStore();
 
   const icons = {
     index: (props: any) => <FontAwesome5 name="running" size={24} {...props} />,
@@ -17,15 +20,16 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
     ),
   };
   return (
-    <View className="absolute flex-row items-center justify-between mx-6 bg-white rounded-full bottom-6">
+    <View
+      onLayout={(event) => {
+        const { height } = event.nativeEvent.layout;
+        const totalHeight = height + 48; // 24px de `bottom-6`
+        setHeight(totalHeight);
+      }}
+      className="absolute flex-row items-center justify-between w-[calc(100%-3rem)] py-6 px-6 mx-6 bg-white rounded-full bottom-6"
+    >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
-        const label =
-          options.tabBarLabel !== undefined
-            ? options.tabBarLabel
-            : options.title !== undefined
-              ? options.title
-              : route.name;
 
         const isFocused = state.index === index;
 
@@ -58,7 +62,7 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
             onPress={onPress}
             onLongPress={onLongPress}
             pressColor="#00000000"
-            className="items-center justify-center flex-1 py-6"
+            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
           >
             {icons[
               route.name === "index" || route.name === "configuration"
