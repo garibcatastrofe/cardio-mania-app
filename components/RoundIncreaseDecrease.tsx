@@ -45,7 +45,7 @@ export function RoundIncreaseDecrease({
         </View>
       </View>
       <View className="flex flex-row gap-2 m-auto">
-        <Pressable className="self-center p-3 bg-red-400 border-red-500 rounded-full"></Pressable>
+        <Pressable className="self-center p-3 bg-red-400 rounded-full"></Pressable>
         <Pressable className="self-center p-3 bg-orange-400 rounded-full"></Pressable>
         <Pressable className="self-center p-3 bg-yellow-400 rounded-full"></Pressable>
         <Pressable className="self-center p-4 bg-green-400 rounded-full"></Pressable>

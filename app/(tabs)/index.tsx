@@ -1,6 +1,7 @@
-import { Text, View } from "react-native";
+import { Text, View, StatusBar } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import { useFocusEffect } from "@react-navigation/native";
 
 /* COMPONENTS */
 import { Modal } from "../../components/Modal/Modal";
@@ -15,18 +16,15 @@ import { useRoundsArray } from "@/stores/Rounds/roundStore";
 /* ICONS */
 import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
-import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
-import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function TabOneScreen() {
-  const { setModal } = useModal();
+  const { setModal, modalBody, modalTitle } = useModal();
   const { roundsArray, setRoundsArray } = useRoundsArray();
 
-  /* const times = [
-    10, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20, 30, 20,
-  ]; */
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-  const [currentSeconds, setCurrentSeconds] = useState(/* roundsArray[0] */ 0);
+  const [currentSeconds, setCurrentSeconds] = useState(
+    /* roundsArray[0] */ /* 0 */ roundsArray[0].seconds
+  );
   const [paused, setPaused] = useState(false);
   const referenciaTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -36,7 +34,7 @@ export default function TabOneScreen() {
     }
     clearInterval(referenciaTimer.current!);
     setPaused(false);
-    setCurrentSeconds(roundsArray[0]);
+    setCurrentSeconds(roundsArray[0].seconds);
 
     // ⚠️ Importante: reiniciamos el index después del render
     requestAnimationFrame(() => {
@@ -47,12 +45,13 @@ export default function TabOneScreen() {
   const reset = () => {
     clearInterval(referenciaTimer.current!);
     setCurrentIndex(null);
-    setCurrentSeconds(roundsArray[0]);
+    setCurrentSeconds(roundsArray[0].seconds);
     setPaused(false);
   };
 
   useEffect(() => {
-    setCurrentSeconds(roundsArray[0]);
+    setCurrentSeconds(roundsArray[0].seconds);
+    setModal(false, "Generar ciclo", <Rounds />);
   }, []);
 
   // ⏱ Controlar el temporizador con setInterval
@@ -71,12 +70,12 @@ export default function TabOneScreen() {
 
           if (nextIndex < roundsArray.length) {
             setCurrentIndex(nextIndex);
-            return roundsArray[nextIndex];
+            return roundsArray[nextIndex].seconds;
           } else {
             // Reset to preview
             setCurrentIndex(null);
             setPaused(false);
-            return roundsArray[0];
+            return roundsArray[0].seconds;
           }
         }
         return prev - 1;
@@ -101,6 +100,16 @@ export default function TabOneScreen() {
     }
   };
 
+  useFocusEffect(
+    useCallback(() => {
+      StatusBar.setBarStyle("light-content");
+      /* return () => {
+          // (opcional) restaurar estilo anterior si quieres
+          
+        }; */
+    }, [])
+  );
+
   return (
     <>
       {/* MODAL PARA LOS CICLOS */}
@@ -112,14 +121,6 @@ export default function TabOneScreen() {
           isBackground: true,
         })}`}
       >
-        {/* BOTON PARA ABRIR MODAL DE ROUNDS */}
-        <AnimatedButton
-          pressOutFunction={() => setModal(true, "Generar ciclo", <Rounds />)}
-          backgroundColor="bg-[#ffffff]"
-          icon={<Ionicons name="options" size={35} color="#525252" />}
-          componentClassName="absolute z-30 self-start bottom-6 right-6"
-        />
-
         <View>
           {/* TITULO */}
           <Text className="text-5xl text-center text-white font-poppins_light">
@@ -130,7 +131,9 @@ export default function TabOneScreen() {
           <CircularTimer
             currentSeconds={currentSeconds}
             totalSeconds={
-              currentIndex !== null ? roundsArray[currentIndex] : roundsArray[0]
+              currentIndex !== null
+                ? roundsArray[currentIndex].seconds
+                : roundsArray[0].seconds
             }
             color={"#ffffff"}
             paused={paused}
@@ -144,7 +147,7 @@ export default function TabOneScreen() {
             <AnimatedButton
               pressOutFunction={startTimer}
               backgroundColor="bg-[#ffffff]"
-              icon={<FontAwesome5 name="running" size={35} color="#525252" />}
+              icon={<AntDesign name="poweroff" size={35} color="#525252" />}
               componentClassName={`self-center ${
                 currentIndex !== null
                   ? "pointer-events-none opacity-20"

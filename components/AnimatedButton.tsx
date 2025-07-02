@@ -14,7 +14,6 @@ export function AnimatedButton({
   icon1?: React.ReactNode;
   componentClassName: string;
 }) {
-  //const { setModal } = useModal();
   const scaleAnim = useRef(new Animated.Value(1)).current;
   const Component = Platform.OS === "web" ? View : Animated.View;
 
@@ -32,7 +31,9 @@ export function AnimatedButton({
       duration: 100,
       useNativeDriver: true,
     }).start();
+  };
 
+  const handlePress = () => {
     pressOutFunction();
   };
 
@@ -44,6 +45,7 @@ export function AnimatedButton({
       <Pressable
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
+        onPress={handlePress}
         className={`items-center justify-center p-4 rounded-3xl ${backgroundColor}`}
       >
         <Component

@@ -22,7 +22,7 @@ export function Rounds() {
         renderItem={({ item, index }) => (
           <RoundIncreaseDecrease
             round={index + 1}
-            seconds={item}
+            seconds={item.seconds}
             lastOne={index + 1 <= roundsArray.length - 1}
           />
         )}
@@ -31,6 +31,7 @@ export function Rounds() {
           display: "flex",
           borderEndEndRadius: 12,
           borderEndStartRadius: 12,
+          backgroundColor: "#cccccc"
         }}
       />
       <View className="flex flex-row gap-4 pt-4">

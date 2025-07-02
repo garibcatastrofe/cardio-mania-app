@@ -1,21 +1,25 @@
 import React from "react";
 import { Tabs } from "expo-router";
-import { useClientOnlyValue } from "@/components/useClientOnlyValue";
+import { TabBar } from "@/components/TabBar";
 
 export default function TabLayout() {
-
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: "#ffffff",
-        headerShown: useClientOnlyValue(false, true),
+        headerShown: false,
       }}
+      tabBar={(props) => <TabBar {...props} />}
     >
       <Tabs.Screen
         name="index"
         options={{
           headerShown: false,
-          tabBarStyle: { display: "none" },
+        }}
+      />
+      <Tabs.Screen
+        name="configuration"
+        options={{
+          headerShown: false,
         }}
       />
     </Tabs>
