@@ -1,4 +1,4 @@
-import { View, Pressable, Animated, Platform } from "react-native";
+import { View, Pressable, Animated, Platform, Text } from "react-native";
 import { useRef } from "react";
 
 export function AnimatedButton({
@@ -6,12 +6,16 @@ export function AnimatedButton({
   backgroundColor,
   icon,
   icon1,
+  text,
+  wantIconAlone,
   componentClassName,
 }: {
   pressOutFunction: Function;
   backgroundColor: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   icon1?: React.ReactNode;
+  text?: string;
+  wantIconAlone: boolean;
   componentClassName: string;
 }) {
   const scaleAnim = useRef(new Animated.Value(1)).current;
@@ -46,13 +50,26 @@ export function AnimatedButton({
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         onPress={handlePress}
-        className={`items-center justify-center p-4 rounded-3xl ${backgroundColor}`}
+        className={`items-center justify-center rounded-3xl ${backgroundColor}`}
       >
         <Component
           style={Platform.OS !== "web" && { transform: [{ scale: scaleAnim }] }}
         >
-          {icon}
-          {icon1}
+          {wantIconAlone ? (
+            <>
+              {icon}
+              {icon1}
+            </>
+          ) : (
+            text !== "" &&
+            text !== null &&
+            text !== undefined && (
+              <View className="flex flex-row items-center justify-center gap-2">
+                {icon}
+                <Text className="font-poppins text-neutral-600">{text}</Text>
+              </View>
+            )
+          )}
         </Component>
       </Pressable>
     </Component>

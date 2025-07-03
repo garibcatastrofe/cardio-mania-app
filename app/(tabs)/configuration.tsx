@@ -1,11 +1,11 @@
-import { StatusBar } from "react-native";
+import { StatusBar, View } from "react-native";
 import { useFocusEffect } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useCallback } from "react";
 
 /* COMPONENTS */
-import { SpecificRoundsContainer } from "@/components/Rounds/Specific/SpecificRoundsContainer";
-import { GeneralRoundsContainer } from "@/components/Rounds/General/GeneralRoundsContainer";
+import { PersonalizedRoundsContainer } from "@/components/Rounds/Personalized/PersonalizedRoundsContainer";
+import { GenericRoundsContainer } from "@/components/Rounds/Generic/GenericRoundsContainer";
 
 /* STORES */
 import { useTabBarStore } from "@/stores/TabBarHeight/tabBarHeightStore";
@@ -16,7 +16,7 @@ export default function Configuration() {
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle("dark-content");
-      console.log(tabBarHeight);
+      StatusBar.setBackgroundColor("#f5f5f5");
     }, [])
   );
 
@@ -25,8 +25,8 @@ export default function Configuration() {
       className="items-center justify-center flex-1 px-4 bg-neutral-100"
       style={{ paddingBottom: tabBarHeight }}
     >
-      <GeneralRoundsContainer />
-      <SpecificRoundsContainer />
+      <GenericRoundsContainer />
+      <PersonalizedRoundsContainer />
     </SafeAreaView>
   );
 }

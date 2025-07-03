@@ -17,13 +17,10 @@ import Entypo from "@expo/vector-icons/Entypo";
 import AntDesign from "@expo/vector-icons/AntDesign";
 
 export default function TabOneScreen() {
-  const { setModal, modalBody, modalTitle } = useModal();
-  const { roundsArray, setRoundsArray } = useRoundsArray();
+  const { roundsArray } = useRoundsArray();
 
   const [currentIndex, setCurrentIndex] = useState<number | null>(null);
-  const [currentSeconds, setCurrentSeconds] = useState(
-    /* roundsArray[0] */ /* 0 */ roundsArray[0].seconds
-  );
+  const [currentSeconds, setCurrentSeconds] = useState(roundsArray[0].seconds);
   const [paused, setPaused] = useState(false);
   const referenciaTimer = useRef<ReturnType<typeof setInterval> | null>(null);
 
@@ -83,24 +80,46 @@ export default function TabOneScreen() {
     return () => clearInterval(referenciaTimer.current!);
   }, [currentIndex, paused]);
 
-  const getColor = ({ isBackground }: { isBackground: boolean }): string => {
+  const getColor = ({ isBackground }: { isBackground: 1 | 2 | 3 }): string => {
     if (currentIndex === null) {
-      if (isBackground) return "bg-[#4ade80]";
-      return "#86efac";
+      if (isBackground === 1) {
+        return "bg-[#4ade80]";
+      } else if (isBackground === 2) {
+        return "#86efac";
+      } else if (isBackground === 3) {
+        return "#4ade80";
+      } else {
+        return "#cccccc";
+      }
     }
 
     if (currentIndex % 2 === 0) {
-      if (isBackground) return "bg-[#4ade80]";
-      return "#86efac";
+      if (isBackground === 1) {
+        return "bg-[#4ade80]";
+      } else if (isBackground === 2) {
+        return "#86efac";
+      } else if (isBackground === 3) {
+        return "#4ade80";
+      } else {
+        return "#cccccc";
+      }
     } else {
-      if (isBackground) return "bg-[#facc15]";
-      return "#fde047";
+      if (isBackground === 1) {
+        return "bg-[#facc15]";
+      } else if (isBackground === 2) {
+        return "#fde047";
+      } else if (isBackground === 3) {
+        return "#facc15";
+      } else {
+        return "#cccccc";
+      }
     }
   };
 
   useFocusEffect(
     useCallback(() => {
       StatusBar.setBarStyle("light-content");
+      StatusBar.setBackgroundColor(getColor({ isBackground: 3 }));
     }, [])
   );
 
@@ -112,7 +131,7 @@ export default function TabOneScreen() {
       {/* CONTENEDOR GENERAL */}
       <SafeAreaView
         className={`justify-center flex-1 ${getColor({
-          isBackground: true,
+          isBackground: 1,
         })}`}
       >
         <View>
@@ -133,14 +152,15 @@ export default function TabOneScreen() {
             paused={paused}
             active={currentIndex !== null}
             keyFrame={currentIndex ?? -1}
-            colorStroke={getColor({ isBackground: false })}
+            colorStroke={getColor({ isBackground: 2 })}
           />
 
           <View className="flex flex-row justify-center gap-4">
             {/* BOTÓN PARA INICIAR */}
             <AnimatedButton
               pressOutFunction={startTimer}
-              backgroundColor="bg-[#ffffff]"
+              backgroundColor="bg-[#ffffff] p-4 rounded-3xl"
+              wantIconAlone={true}
               icon={<AntDesign name="poweroff" size={35} color="#525252" />}
               componentClassName={`self-center ${
                 currentIndex !== null
@@ -152,7 +172,8 @@ export default function TabOneScreen() {
             {/* BOTÓN PARA PAUSAR */}
             <AnimatedButton
               pressOutFunction={() => setPaused((prev) => !prev)}
-              backgroundColor="bg-[#ffffff]"
+              wantIconAlone={true}
+              backgroundColor="bg-[#ffffff] p-4 rounded-3xl"
               icon={
                 <Entypo
                   className={paused ? "" : "hidden"}
@@ -179,7 +200,8 @@ export default function TabOneScreen() {
             {/* BOTÓN PARA REINICIAR */}
             <AnimatedButton
               pressOutFunction={reset}
-              backgroundColor="bg-[#ffffff]"
+              wantIconAlone={true}
+              backgroundColor="bg-[#ffffff] p-4 rounded-3xl"
               icon={<AntDesign name="reload1" size={35} color="#525252" />}
               componentClassName={`self-center ${
                 currentIndex === null

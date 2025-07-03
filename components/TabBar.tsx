@@ -2,6 +2,7 @@ import { View } from "react-native";
 import { useLinkBuilder } from "@react-navigation/native";
 import { PlatformPressable } from "@react-navigation/elements";
 import { BottomTabBarProps } from "@react-navigation/bottom-tabs";
+import { useState } from "react";
 
 /* ICONS */
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
@@ -26,12 +27,12 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
         const totalHeight = height + 48; // 24px de `bottom-6`
         setHeight(totalHeight);
       }}
-      className="absolute flex-row items-center justify-between w-[calc(100%-3rem)] py-6 px-6 mx-6 bg-white rounded-full bottom-6"
+      className="absolute flex-row items-center justify-between w-[calc(100%-3rem)] mx-6 bottom-6"
     >
       {state.routes.map((route, index) => {
         const { options } = descriptors[route.key];
-
         const isFocused = state.index === index;
+        const [isPressed, setIsPressed] = useState(false);
 
         const onPress = () => {
           const event = navigation.emit({
@@ -45,24 +46,28 @@ export function TabBar({ state, descriptors, navigation }: BottomTabBarProps) {
           }
         };
 
-        const onLongPress = () => {
-          navigation.emit({
-            type: "tabLongPress",
-            target: route.key,
-          });
-        };
-
         return (
           <PlatformPressable
             key={route.name}
             href={buildHref(route.name, route.params)}
             accessibilityState={isFocused ? { selected: true } : {}}
             accessibilityLabel={options.tabBarAccessibilityLabel}
+            onPressIn={() => setIsPressed(true)}
+            onPressOut={() => setIsPressed(false)}
             testID={options.tabBarButtonTestID}
             onPress={onPress}
-            onLongPress={onLongPress}
             pressColor="#00000000"
-            style={{ flex: 1, alignItems: "center", justifyContent: "center" }}
+            style={{
+              flex: 1,
+              alignItems: "center",
+              justifyContent: "center",
+              backgroundColor: isPressed ? "#f3f4f6" : "white",
+              paddingVertical: 24,
+              borderTopLeftRadius: route.name === "index" ? 48 : 0,
+              borderBottomLeftRadius: route.name === "index" ? 48 : 0,
+              borderTopEndRadius: route.name === "configuration" ? 48 : 0,
+              borderBottomEndRadius: route.name === "configuration" ? 48 : 0,
+            }}
           >
             {icons[
               route.name === "index" || route.name === "configuration"
