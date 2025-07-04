@@ -16,6 +16,10 @@ export function PersonalizedRoundsContainer() {
   const { roundsArray, setRoundsArray } = useRoundsArray();
   const { tempRoundsArray, setTempRoundsArray } = useTempRoundsArray();
 
+  const addRound = () => {
+    //tempRoundsArray.push({})
+  };
+
   useEffect(() => {
     setRoundsArray(roundsArray);
   }, []);

@@ -1,10 +1,7 @@
 /* INTERFACES */
-import { NativewindColor } from "@/interfaces/natiwindColor";
+import { ColorButton } from "@/interfaces/colorButton";
 
-export const colorButtons: {
-  highColor: NativewindColor;
-  lowColor: NativewindColor;
-}[] = [
+export const colorButtons: ColorButton[] = [
   {
     highColor: "bg-red-400",
     lowColor: "bg-red-300",

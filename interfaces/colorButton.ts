@@ -1,9 +1,7 @@
 /* INTERFACES */
 import { NativewindColor } from "@/interfaces/natiwindColor";
 
-export interface Round {
-  id: string;
-  seconds: number;
+export interface ColorButton {
   highColor: NativewindColor;
   lowColor: NativewindColor;
 }

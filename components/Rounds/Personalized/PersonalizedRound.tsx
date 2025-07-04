@@ -1,4 +1,4 @@
-import { View, Text, Pressable } from "react-native";
+import { View, Text } from "react-native";
 
 /* COMPONENTS */
 import { AnimatedButton } from "@/components/Animated/AnimatedButton";
@@ -13,6 +13,7 @@ import Feather from "@expo/vector-icons/Feather";
 
 /* INTERFACES */
 import { NativewindColor } from "@/interfaces/natiwindColor";
+import { ColorButton } from "@/interfaces/colorButton";
 
 /* STORES */
 import { useTempRoundsArray } from "@/stores/Rounds/roundStore";
@@ -25,16 +26,26 @@ export function PersonalizedRound({
   color,
 }: {
   index: number;
-  id: number;
+  id: string;
   seconds: number;
   lastOne: boolean;
   color: NativewindColor;
 }) {
   const { tempRoundsArray, setTempRoundsArray } = useTempRoundsArray();
 
-  const deleteRound = (idCambiar: number) => {
-    const newArray = tempRoundsArray.filter((round) => round.id !== idCambiar);
+  const deleteRound = (idChange: string) => {
+    const newArray = tempRoundsArray.filter((round) => round.id !== idChange);
     setTempRoundsArray(newArray);
+  };
+
+  const findTempRoundById = (c: ColorButton): string => {
+    const currentRound = tempRoundsArray.find((round) => round.id === id);
+
+    if (currentRound?.highColor === c.highColor) {
+      return "scale-125";
+    } else {
+      return "scale-100";
+    }
   };
 
   return (
@@ -62,7 +73,7 @@ export function PersonalizedRound({
             pressOutFunction={() =>
               setTempRoundsArray(
                 tempRoundsArray.map((round) =>
-                  round.id === index && round.seconds >= 6
+                  round.id === id && round.seconds >= 6
                     ? {
                         id: round.id,
                         highColor: round.highColor,
@@ -83,7 +94,7 @@ export function PersonalizedRound({
             pressOutFunction={() =>
               setTempRoundsArray(
                 tempRoundsArray.map((round) =>
-                  round.id === index && round.seconds <= 20
+                  round.id === id && round.seconds <= 20
                     ? {
                         id: round.id,
                         highColor: round.highColor,
@@ -102,11 +113,7 @@ export function PersonalizedRound({
         {colorButtons.map((c, i) => (
           <ChangeColorButton
             key={i}
-            padding={
-              c.highColor === tempRoundsArray[index].highColor
-                ? "scale-125"
-                : "scale-100"
-            }
+            padding={findTempRoundById(c)}
             color={c.highColor}
             onPress={() =>
               setTempRoundsArray(
