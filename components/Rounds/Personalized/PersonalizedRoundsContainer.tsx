@@ -14,11 +14,8 @@ import { useRoundsArray, useTempRoundsArray } from "@/stores/Rounds/roundStore";
 
 export function PersonalizedRoundsContainer() {
   const { roundsArray, setRoundsArray } = useRoundsArray();
-  const { tempRoundsArray, setTempRoundsArray } = useTempRoundsArray();
-
-  const addRound = () => {
-    //tempRoundsArray.push({})
-  };
+  const { tempRoundsArray, setTempRoundsArray, addRound } =
+    useTempRoundsArray();
 
   useEffect(() => {
     setRoundsArray(roundsArray);
@@ -58,7 +55,13 @@ export function PersonalizedRoundsContainer() {
         <AnimatedButton
           backgroundColor="bg-white w-full py-4 px-2"
           componentClassName="flex items-center justify-center flex-grow"
-          pressOutFunction={() => console.log("Botón agregar presionado!...")}
+          pressOutFunction={() =>
+            addRound({
+              highColor: "bg-red-400",
+              lowColor: "bg-red-300",
+              seconds: 10,
+            })
+          }
           wantIconAlone={false}
           icon={<Ionicons name="add-outline" size={24} color="#525252" />}
           text="Agregar"
