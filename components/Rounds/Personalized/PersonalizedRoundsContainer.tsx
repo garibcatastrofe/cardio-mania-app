@@ -40,6 +40,7 @@ export function PersonalizedRoundsContainer() {
         renderItem={({ item, index }) => (
           <PersonalizedRound
             index={index}
+            id={item.id}
             seconds={item.seconds}
             lastOne={index + 1 <= tempRoundsArray.length - 1}
             color={item.highColor}
