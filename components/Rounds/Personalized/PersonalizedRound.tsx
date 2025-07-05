@@ -12,7 +12,7 @@ import AntDesign from "@expo/vector-icons/AntDesign";
 import Feather from "@expo/vector-icons/Feather";
 
 /* INTERFACES */
-import { NativewindColor } from "@/interfaces/natiwindColor";
+import { NativewindColor } from "@/interfaces/nativewindColor";
 import { ColorButton } from "@/interfaces/colorButton";
 
 /* STORES */
@@ -22,13 +22,11 @@ export function PersonalizedRound({
   index,
   id,
   seconds,
-  lastOne,
   color,
 }: {
   index: number;
   id: string;
   seconds: number;
-  lastOne: boolean;
   color: NativewindColor;
 }) {
   const { tempRoundsArray, setTempRoundsArray } = useTempRoundsArray();
@@ -49,7 +47,7 @@ export function PersonalizedRound({
   };
 
   return (
-    <View className={`${lastOne ? "mb-4" : ""}`}>
+    <View className="mb-4">
       <View
         className={`flex gap-4 p-4 mb-4 transition-all duration-150 rounded-xl ${color}`}
       >

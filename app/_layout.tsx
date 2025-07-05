@@ -11,7 +11,7 @@ import {
   useFonts,
   Poppins_400Regular,
   Poppins_700Bold,
-  Poppins_300Light
+  Poppins_300Light,
 } from "@expo-google-fonts/poppins";
 // Import your global CSS file
 import "../global.css";
@@ -27,7 +27,7 @@ export default function RootLayout() {
   const [loaded, error] = useFonts({
     Poppins_400Regular,
     Poppins_700Bold,
-    Poppins_300Light
+    Poppins_300Light,
   });
 
   useEffect(() => {

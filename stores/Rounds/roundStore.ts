@@ -1,77 +1,31 @@
 import { create } from "zustand";
-import { nanoid } from "nanoid";
-
-/* INTERFACES */
 import { Round } from "@/interfaces/round";
 
-// Tipado del estado global
 interface RoundArray {
   roundsArray: Round[];
   setRoundsArray: (roundsArray: Round[]) => void;
-  addRound: (round: Omit<Round, "id">) => void;
+  addRound: (round: Omit<Round, "id">) => Promise<void>;
 }
 
-// Crear el store
 export const useRoundsArray = create<RoundArray>((set) => ({
-  roundsArray: [
-    {
-      id: nanoid(),
-      highColor: "bg-red-400",
-      seconds: 10,
-      lowColor: "bg-red-300",
-    },
-    {
-      id: nanoid(),
-      highColor: "bg-orange-400",
-      seconds: 10,
-      lowColor: "bg-orange-300",
-    },
-    {
-      id: nanoid(),
-      highColor: "bg-yellow-400",
-      seconds: 10,
-      lowColor: "bg-yellow-300",
-    },
-    {
-      id: nanoid(),
-      highColor: "bg-green-400",
-      seconds: 10,
-      lowColor: "bg-green-300",
-    },
-    {
-      id: nanoid(),
-      highColor: "bg-cyan-400",
-      seconds: 10,
-      lowColor: "bg-cyan-300",
-    },
-    {
-      id: nanoid(),
-      highColor: "bg-blue-400",
-      seconds: 10,
-      lowColor: "bg-blue-300",
-    },
-    {
-      id: nanoid(),
-      highColor: "bg-purple-400",
-      seconds: 10,
-      lowColor: "bg-purple-300",
-    },
-  ],
-  setRoundsArray: (roundsArray) =>
-    set({
-      roundsArray,
-    }),
+  roundsArray: [],
 
-  addRound: (round) =>
+  setRoundsArray: (roundsArray) => set({ roundsArray }),
+
+  addRound: async (round) => {
+    const { generateId } = await import("@/utils/generateId");
+    const id = await generateId();
+
     set((state) => ({
-      roundsArray: [...state.roundsArray, { ...round, id: nanoid() }],
-    })),
+      roundsArray: [...state.roundsArray, { ...round, id }],
+    }));
+  },
 }));
 
 interface TempRoundArray {
   tempRoundsArray: Round[];
   setTempRoundsArray: (tempRoundsArray: Round[]) => void;
-  addRound: (round: Omit<Round, "id">) => void;
+  addRound: (round: Omit<Round, "id">) => Promise<void>;
 }
 
 export const useTempRoundsArray = create<TempRoundArray>((set) => ({
@@ -81,8 +35,12 @@ export const useTempRoundsArray = create<TempRoundArray>((set) => ({
       tempRoundsArray,
     }),
 
-  addRound: (round) =>
+  addRound: async (round) => {
+    const { generateId } = await import("@/utils/generateId");
+    const id = await generateId();
+
     set((state) => ({
-      tempRoundsArray: [...state.tempRoundsArray, { ...round, id: nanoid() }],
-    })),
+      tempRoundsArray: [...state.tempRoundsArray, { ...round, id }],
+    }));
+  },
 }));

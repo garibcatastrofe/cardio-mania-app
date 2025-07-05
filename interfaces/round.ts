@@ -1,5 +1,5 @@
 /* INTERFACES */
-import { NativewindColor } from "@/interfaces/natiwindColor";
+import { NativewindColor } from "@/interfaces/nativewindColor";
 
 export interface Round {
   id: string;

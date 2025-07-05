@@ -1,40 +1,39 @@
-/* INTERFACES */
-import { ColorButton } from "@/interfaces/colorButton";
+import { Round } from "@/interfaces/round";
 
-export const colorButtons: ColorButton[] = [
+export const initialRounds: Omit<Round, "id">[] = [
   {
-    id: 0,
     highColor: "bg-red-400",
     lowColor: "bg-red-300",
+    seconds: 10,
   },
   {
-    id: 1,
     highColor: "bg-orange-400",
     lowColor: "bg-orange-300",
+    seconds: 10,
   },
   {
-    id: 2,
     highColor: "bg-yellow-400",
     lowColor: "bg-yellow-300",
+    seconds: 10,
   },
   {
-    id: 3,
     highColor: "bg-green-400",
     lowColor: "bg-green-300",
+    seconds: 10,
   },
   {
-    id: 4,
     highColor: "bg-cyan-400",
     lowColor: "bg-cyan-300",
+    seconds: 10,
   },
   {
-    id: 5,
     highColor: "bg-blue-400",
     lowColor: "bg-blue-300",
+    seconds: 10,
   },
   {
-    id: 6,
     highColor: "bg-purple-400",
     lowColor: "bg-purple-300",
+    seconds: 10,
   },
 ];

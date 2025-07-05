@@ -1,8 +1,7 @@
-/* COMPONENTS */
-import { AnimatedButton } from "@/components/Animated/AnimatedButton";
+import { Pressable } from "react-native";
 
 /* INTERFACES */
-import { NativewindColor } from "@/interfaces/natiwindColor";
+import { NativewindColor } from "@/interfaces/nativewindColor";
 
 export function ChangeColorButton({
   onPress,
@@ -17,13 +16,9 @@ export function ChangeColorButton({
     onPress();
   };
   return (
-    <AnimatedButton
-      backgroundColor={
-        color.toString() + " w-6 h-6 transition-all duration-150 " + padding
-      }
-      componentClassName={`rounded-full self-center`}
-      pressOutFunction={handlePress}
-      wantIconAlone={true}
+    <Pressable
+      onPress={handlePress}
+      className={`${color.toString()} rounded-full self-center w-6 h-6 transition-all duration-150 ${padding}`}
     />
   );
 }

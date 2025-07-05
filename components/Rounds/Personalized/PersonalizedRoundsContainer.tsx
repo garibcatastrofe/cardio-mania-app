@@ -1,5 +1,4 @@
 import { View, FlatList, Text } from "react-native";
-import { useEffect } from "react";
 
 /* COMPONENTS */
 import { PersonalizedRound } from "@/components/Rounds/Personalized/PersonalizedRound";
@@ -10,24 +9,10 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Feather from "@expo/vector-icons/Feather";
 
 /* STORES */
-import { useRoundsArray, useTempRoundsArray } from "@/stores/Rounds/roundStore";
+import { useTempRoundsArray } from "@/stores/Rounds/roundStore";
 
 export function PersonalizedRoundsContainer() {
-  const { roundsArray, setRoundsArray } = useRoundsArray();
-  const { tempRoundsArray, setTempRoundsArray, addRound } =
-    useTempRoundsArray();
-
-  useEffect(() => {
-    setRoundsArray(roundsArray);
-  }, []);
-
-  useEffect(() => {
-    setTempRoundsArray(roundsArray);
-    console.log(
-      "-------------------------------------------------------------------------"
-    );
-    console.log(tempRoundsArray);
-  }, [roundsArray]);
+  const { tempRoundsArray, addRound } = useTempRoundsArray();
 
   return (
     <View className="flex-1 w-[calc(100%-2rem)]">
@@ -43,7 +28,6 @@ export function PersonalizedRoundsContainer() {
             index={index}
             id={item.id}
             seconds={item.seconds}
-            lastOne={index + 1 <= tempRoundsArray.length - 1}
             color={item.highColor}
           />
         )}

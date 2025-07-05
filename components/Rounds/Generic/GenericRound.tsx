@@ -2,7 +2,7 @@ import { Pressable, Text, View, Animated, Platform } from "react-native";
 import { useRef } from "react";
 
 /* FUNCTIONS */
-import { getTwentyFirstLetters } from "@/functions/getTwentyFirstLetters";
+import { getTwentyFirstLetters } from "@/utils/getTwentyFirstLetters";
 
 /* ICONS */
 import Entypo from "@expo/vector-icons/Entypo";

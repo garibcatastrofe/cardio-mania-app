@@ -25,7 +25,7 @@ export default function CircularTimer({
   currentSeconds,
   totalSeconds,
   size = 250,
-  color = "#ffffff",
+  color = "#525252",
   paused = false,
   active = true,
   keyFrame = 0,
@@ -103,7 +103,7 @@ export default function CircularTimer({
           origin={`${size / 2}, ${size / 2}`}
         />
       </Svg>
-      <Text className="absolute text-4xl font-poppins_bold" style={{ color }}>
+      <Text className="absolute text-4xl font-poppins text-neutral-600">
         {formatTime(currentSeconds)}
       </Text>
     </View>
