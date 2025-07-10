@@ -13,8 +13,8 @@ export const getHexaColorByNativewindColor = (
     case "bg-orange-400":
       colorHexa = "#fb923c";
       break;
-    case "bg-yellow-400":
-      colorHexa = "#facc15";
+    case "bg-amber-400":
+      colorHexa = "#fbbf24";
       break;
     case "bg-green-400":
       colorHexa = "#4ade80";
@@ -34,8 +34,8 @@ export const getHexaColorByNativewindColor = (
     case "bg-orange-300":
       colorHexa = "#fdba74";
       break;
-    case "bg-yellow-300":
-      colorHexa = "#fde047";
+    case "bg-amber-300":
+      colorHexa = "#fcd34d";
       break;
     case "bg-green-300":
       colorHexa = "#86efac";

@@ -1,10 +1,9 @@
-import { Text } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
+import { Text, View } from "react-native";
 
 export function NotFoundPage({ text }: { text: string }) {
   return (
-    <SafeAreaView className="flex items-center justify-center flex-1 px-4">
+    <View className="flex items-center justify-center flex-1 px-4 bg-neutral-100">
       <Text className="text-xl font-poppins text-neutral-600">{text}</Text>
-    </SafeAreaView>
+    </View>
   );
 }

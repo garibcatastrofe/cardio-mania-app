@@ -1,5 +1,4 @@
 import { Text, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { useState, useEffect, useRef } from "react";
 
 /* COMPONENTS */
@@ -15,6 +14,7 @@ import { useRoundsArray } from "@/stores/Rounds/roundStore";
 
 /* UTILS */
 import { getHexaColorByNativewindColor } from "@/utils/getHexaColorByNativewindColor";
+import { NativewindColor } from "@/interfaces/nativewindColor";
 
 export function IndexPage() {
   const { roundsArray } = useRoundsArray();
@@ -80,48 +80,23 @@ export function IndexPage() {
     return () => clearInterval(referenciaTimer.current!);
   }, [currentIndex, paused]);
 
-  const getColor = ({ isBackground }: { isBackground: 1 | 2 | 3 }): string => {
-    if (currentIndex === null) {
-      if (isBackground === 1) {
-        return "bg-[#4ade80]";
-      } else if (isBackground === 2) {
-        return "#86efac";
-      } else if (isBackground === 3) {
-        return "#4ade80";
-      } else {
-        return "#cccccc";
-      }
-    }
-
-    if (currentIndex % 2 === 0) {
-      if (isBackground === 1) {
-        return "bg-[#4ade80]";
-      } else if (isBackground === 2) {
-        return "#86efac";
-      } else if (isBackground === 3) {
-        return "#4ade80";
-      } else {
-        return "#cccccc";
-      }
+  const getColor = (): NativewindColor => {
+    if (currentIndex !== null) {
+      return roundsArray[currentIndex].highColor;
     } else {
-      if (isBackground === 1) {
-        return "bg-[#facc15]";
-      } else if (isBackground === 2) {
-        return "#fde047";
-      } else if (isBackground === 3) {
-        return "#facc15";
-      } else {
-        return "#cccccc";
-      }
+      return roundsArray[0].highColor;
     }
   };
 
   return (
-    <SafeAreaView
-      className={`justify-center items-center flex-1 bg-neutral-100`}
+    <View
+      className="items-center justify-center flex-1"
+      style={{
+        backgroundColor: getHexaColorByNativewindColor(getColor()),
+      }}
     >
       {/* TITULO */}
-      <Text className="text-5xl text-center text-neutral-600 font-poppins_light">
+      <Text className="text-4xl text-center text-white font-poppins">
         CARDIOMANIA
       </Text>
 
@@ -133,18 +108,14 @@ export function IndexPage() {
             ? roundsArray[currentIndex].seconds
             : roundsArray[0].seconds
         }
-        color={
-          currentIndex !== null
-            ? getHexaColorByNativewindColor(roundsArray[currentIndex].lowColor)
-            : getHexaColorByNativewindColor(roundsArray[0].lowColor)
-        }
+        color={"#ffffff"}
         paused={paused}
         active={currentIndex !== null}
         keyFrame={currentIndex ?? -1}
         colorStroke={
           currentIndex !== null
-            ? getHexaColorByNativewindColor(roundsArray[currentIndex].highColor)
-            : getHexaColorByNativewindColor(roundsArray[0].highColor)
+            ? getHexaColorByNativewindColor(roundsArray[currentIndex].lowColor)
+            : getHexaColorByNativewindColor(roundsArray[0].lowColor)
         }
       />
 
@@ -203,6 +174,6 @@ export function IndexPage() {
           }`}
         />
       </View>
-    </SafeAreaView>
+    </View>
   );
 }

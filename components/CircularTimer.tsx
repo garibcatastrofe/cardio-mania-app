@@ -103,7 +103,7 @@ export default function CircularTimer({
           origin={`${size / 2}, ${size / 2}`}
         />
       </Svg>
-      <Text className="absolute text-4xl font-poppins text-neutral-600">
+      <Text className="absolute text-4xl text-white font-poppins_bold">
         {formatTime(currentSeconds)}
       </Text>
     </View>

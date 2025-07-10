@@ -4,7 +4,7 @@ import { View, FlatList, Text } from "react-native";
 import { GenericRound } from "@/components/Rounds/Generic/GenericRound";
 
 /* DATA */
-import { generalRounds } from "@/data/generalRounds";
+import { generalRounds } from "@/data/genericRounds";
 
 export function GenericRoundsContainer() {
   const handlePressGenericRound = () => {
@@ -21,7 +21,7 @@ export function GenericRoundsContainer() {
     );
   };
   return (
-    <View className="w-[calc(100%-2rem)]">
+    <View className="w-[calc(100%-2rem)] self-start mx-4">
       <Text className="mt-6 mb-2 text-2xl font-poppins text-neutral-600">
         Genérico
       </Text>

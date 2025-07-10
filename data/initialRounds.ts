@@ -9,31 +9,31 @@ export const initialRounds: Omit<Round, "id">[] = [
   {
     highColor: "bg-orange-400",
     lowColor: "bg-orange-300",
-    seconds: 10,
+    seconds: 20,
   },
   {
-    highColor: "bg-yellow-400",
-    lowColor: "bg-yellow-300",
-    seconds: 10,
+    highColor: "bg-amber-400",
+    lowColor: "bg-amber-300",
+    seconds: 30,
   },
   {
     highColor: "bg-green-400",
     lowColor: "bg-green-300",
-    seconds: 10,
+    seconds: 40,
   },
   {
     highColor: "bg-cyan-400",
     lowColor: "bg-cyan-300",
-    seconds: 10,
+    seconds: 50,
   },
   {
     highColor: "bg-blue-400",
     lowColor: "bg-blue-300",
-    seconds: 10,
+    seconds: 60,
   },
   {
     highColor: "bg-purple-400",
     lowColor: "bg-purple-300",
-    seconds: 10,
+    seconds: 70,
   },
 ];

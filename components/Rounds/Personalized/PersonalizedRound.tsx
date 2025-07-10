@@ -17,17 +17,16 @@ import { ColorButton } from "@/interfaces/colorButton";
 
 /* STORES */
 import { useTempRoundsArray } from "@/stores/Rounds/roundStore";
+import { useEffect } from "react";
+import { Round } from "@/interfaces/round";
+import { getHexaColorByNativewindColor } from "@/utils/getHexaColorByNativewindColor";
 
 export function PersonalizedRound({
   index,
-  id,
-  seconds,
-  color,
+  round,
 }: {
   index: number;
-  id: string;
-  seconds: number;
-  color: NativewindColor;
+  round: Round;
 }) {
   const { tempRoundsArray, setTempRoundsArray } = useTempRoundsArray();
 
@@ -37,7 +36,7 @@ export function PersonalizedRound({
   };
 
   const findTempRoundById = (c: ColorButton): string => {
-    const currentRound = tempRoundsArray.find((round) => round.id === id);
+    const currentRound = tempRoundsArray.find((r) => r.id === round.id);
 
     if (currentRound?.highColor === c.highColor) {
       return "scale-125";
@@ -46,60 +45,78 @@ export function PersonalizedRound({
     }
   };
 
+  const getColor = (color: NativewindColor): string => {
+    switch (color) {
+      case "bg-red-400":
+        return "bg-red-400";
+      case "bg-orange-400":
+        return "bg-orange-400";
+      case "bg-amber-400":
+        return "bg-amber-400";
+      case "bg-green-400":
+        return "bg-green-400";
+      case "bg-cyan-400":
+        return "bg-cyan-400";
+      case "bg-blue-400":
+        return "bg-blue-400";
+      case "bg-purple-400":
+        return "bg-purple-400";
+    }
+    return ""
+  };
+
   return (
     <View className="mb-4">
       <View
-        className={`flex gap-4 p-4 mb-4 transition-all duration-150 rounded-xl ${color}`}
+        className={`flex gap-4 p-4 mb-4 transition-all duration-150 rounded-xl ${getColor(round.highColor)}`}
       >
         <View className="flex flex-row items-center justify-between">
-          <Text className="text-lg text-white font-poppins">
-            Tiempo {index + 1}
-          </Text>
+          <Text className="text-lg text-white font-poppins">Tiempo {index + 1}</Text>
           <AnimatedButton
             backgroundColor="bg-red-100 p-2 rounded-full"
             componentClassName="self-center"
             icon={<Feather name="x" size={15} color={"#ef4444"} />}
-            pressOutFunction={() => deleteRound(id)}
+            pressOutFunction={() => deleteRound(round.id)}
             wantIconAlone={true}
           />
         </View>
         <View className="flex flex-row items-center justify-between w-full h-fit">
           <AnimatedButton
-            backgroundColor={`p-4 rounded-3xl ${seconds <= 5 ? "bg-neutral-300 pointer-events-none" : "bg-white"}`}
+            backgroundColor={`p-4 rounded-3xl ${round.seconds <= 5 ? "bg-neutral-200 pointer-events-none" : "bg-white"}`}
             componentClassName="self-center"
             icon={<AntDesign name="minus" size={24} color="#52525b" />}
             pressOutFunction={() =>
               setTempRoundsArray(
-                tempRoundsArray.map((round) =>
-                  round.id === id && round.seconds >= 6
+                tempRoundsArray.map((r) =>
+                  r.id === round.id && r.seconds >= 6
                     ? {
-                        id: round.id,
-                        highColor: round.highColor,
-                        lowColor: round.lowColor,
-                        seconds: round.seconds - 1,
+                        id: r.id,
+                        highColor: r.highColor,
+                        lowColor: r.lowColor,
+                        seconds: r.seconds - 1,
                       }
-                    : round
+                    : r
                 )
               )
             }
             wantIconAlone={true}
           />
-          <Text className="text-lg text-white font-poppins">{seconds}</Text>
+          <Text className="text-lg text-white font-poppins">{round.seconds}</Text>
           <AnimatedButton
-            backgroundColor={`bg-white p-4 rounded-3xl ${seconds >= 5940 ? "bg-neutral-300 pointer-events-none" : "bg-white"}`}
+            backgroundColor={`bg-white p-4 rounded-3xl ${round.seconds >= 5940 ? "bg-neutral-200 pointer-events-none" : "bg-white"}`}
             componentClassName="self-center"
             icon={<AntDesign name="plus" size={24} color="#52525b" />}
             pressOutFunction={() =>
               setTempRoundsArray(
-                tempRoundsArray.map((round) =>
-                  round.id === id && round.seconds <= 20
+                tempRoundsArray.map((r) =>
+                  r.id === round.id && r.seconds <= 20
                     ? {
-                        id: round.id,
-                        highColor: round.highColor,
-                        lowColor: round.lowColor,
-                        seconds: round.seconds + 1,
+                        id: r.id,
+                        highColor: r.highColor,
+                        lowColor: r.lowColor,
+                        seconds: r.seconds + 1,
                       }
-                    : round
+                    : r
                 )
               )
             }
@@ -107,7 +124,7 @@ export function PersonalizedRound({
           />
         </View>
       </View>
-      <View className="flex flex-row gap-3 m-auto">
+      {/* <View className="flex flex-row gap-3 m-auto">
         {colorButtons.map((c, i) => (
           <ChangeColorButton
             key={i}
@@ -129,7 +146,7 @@ export function PersonalizedRound({
             }
           />
         ))}
-      </View>
+      </View> */}
     </View>
   );
 }

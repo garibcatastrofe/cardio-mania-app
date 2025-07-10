@@ -14,8 +14,8 @@ export const colorButtons: ColorButton[] = [
   },
   {
     id: 2,
-    highColor: "bg-yellow-400",
-    lowColor: "bg-yellow-300",
+    highColor: "bg-amber-400",
+    lowColor: "bg-amber-300",
   },
   {
     id: 3,

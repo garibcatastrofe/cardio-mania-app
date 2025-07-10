@@ -9,26 +9,25 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Feather from "@expo/vector-icons/Feather";
 
 /* STORES */
-import { useTempRoundsArray } from "@/stores/Rounds/roundStore";
+import { useRoundsArray, useTempRoundsArray } from "@/stores/Rounds/roundStore";
+import { NativewindColor } from "@/interfaces/nativewindColor";
 
 export function PersonalizedRoundsContainer() {
   const { tempRoundsArray, addRound } = useTempRoundsArray();
 
   return (
-    <View className="flex-1 w-[calc(100%-2rem)]">
+    <View className="flex-1 w-full px-4">
       <Text className="mt-6 mb-2 text-2xl font-poppins text-neutral-600">
         Personalizado
       </Text>
       <FlatList
-        data={tempRoundsArray}
+        data={(tempRoundsArray.length === 0 || tempRoundsArray === null || tempRoundsArray === undefined) ? [] : tempRoundsArray}
         keyExtractor={(_, index) => index.toString()}
         showsVerticalScrollIndicator={false}
         renderItem={({ item, index }) => (
           <PersonalizedRound
             index={index}
-            id={item.id}
-            seconds={item.seconds}
-            color={item.highColor}
+            round={item}
           />
         )}
         style={{

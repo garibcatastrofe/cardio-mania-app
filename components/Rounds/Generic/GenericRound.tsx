@@ -9,6 +9,7 @@ import Entypo from "@expo/vector-icons/Entypo";
 
 /* INTERFACES */
 import { Round } from "@/interfaces/round";
+import { getHexaColorByNativewindColor } from "@/utils/getHexaColorByNativewindColor";
 
 export function GenericRound({
   title,
@@ -63,10 +64,12 @@ export function GenericRound({
         <View className="flex flex-row flex-wrap items-center">
           {rounds.map((round, index) => {
             if (index >= 3) return;
+            console.log(round.highColor)
             return (
-              <View key={index} className="flex flex-row items-center">
+              <View key={index} className={`flex flex-row items-center`}>
                 <View
-                  className={`h-12 w-12 rounded-full flex items-center justify-center ${round.highColor}`}
+                  className={`h-12 w-12 flex items-center justify-center`}
+                  style={{ backgroundColor: getHexaColorByNativewindColor(round.highColor), borderRadius: "100%" }}
                 >
                   <Text className="text-lg text-white font-poppins">
                     {round.seconds}
